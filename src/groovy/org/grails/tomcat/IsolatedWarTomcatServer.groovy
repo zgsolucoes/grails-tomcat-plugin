@@ -53,6 +53,10 @@ class IsolatedWarTomcatServer extends TomcatServer {
     }
 
     void doStart(String host, int httpPort, int httpsPort) {
+        if (httpsPort) {
+            throw new UnsupportedOperationException("Running the WAR with HTTPS is currently not supported")
+        }
+        
         def outFile = new File(buildSettings.projectTargetDir, "tomcat-out.txt")
         def errFile = new File(buildSettings.projectTargetDir, "tomcat-err.txt")
         [outFile, errFile].each { ant.delete(file: it, failonerror: false) }
