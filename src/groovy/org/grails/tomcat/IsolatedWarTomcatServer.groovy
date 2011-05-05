@@ -38,7 +38,6 @@ class IsolatedWarTomcatServer extends TomcatServer {
     static DEFAULT_STARTUP_TIMEOUT_SECS = 300 // 5 mins
 
     protected final File warDir
-    protected final String warPath
     protected final String contextPath
 
     IsolatedWarTomcatServer(String warPath, String contextPath) {
@@ -49,7 +48,6 @@ class IsolatedWarTomcatServer extends TomcatServer {
         ant.unzip(src: warPath, dest: warDir)
 
         this.contextPath = contextPath == '/' ? '' : contextPath
-        this.warPath = warDir
     }
 
     void doStart(String host, int httpPort, int httpsPort) {
@@ -69,7 +67,7 @@ class IsolatedWarTomcatServer extends TomcatServer {
                     }
                 }
                 arg value: tomcatDir
-                arg value: warPath
+                arg value: warDir.absolutePath
                 arg value: contextPath
                 arg value: host
                 arg value: httpPort
