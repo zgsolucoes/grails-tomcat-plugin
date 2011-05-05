@@ -98,8 +98,7 @@ class InlineExplodedTomcatServer extends TomcatServer {
             sslConnector.setAttribute("keystore", keystoreFile.absolutePath)
             sslConnector.setAttribute("keystorePass", keyPassword)
             sslConnector.URIEncoding = 'UTF-8'
-            tomcat.service.addConnector sslConnector
-
+            tomcat.service.addConnector(sslConnector)
         }
 
         tomcat.start()
