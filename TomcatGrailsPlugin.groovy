@@ -19,9 +19,8 @@ class TomcatGrailsPlugin {
     def grailsVersion = "1.3 > *"
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-            "grails-app/views/error.gsp",
-	    "grails-app/domain/*.groovy",
-	    "grails-app/controllers/*.groovy"		
+        "grails-app/**/*",
+        "web-app/**/*"
     ]
     // don't package in war
     def scopes = [excludes:'war']
