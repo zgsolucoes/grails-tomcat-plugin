@@ -1,4 +1,8 @@
 plugin.xml
 target
 *.zip
+.gradle
+build
+*.log
+.DS_Store
 
