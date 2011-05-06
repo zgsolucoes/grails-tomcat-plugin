@@ -33,9 +33,9 @@ abstract class TomcatServer implements EmbeddableServer {
     protected final File workDir
     protected final File tomcatDir
 
-    protected String keystore
-    protected File keystoreFile
-    protected String keyPassword
+    protected final boolean usingUserKeystore
+    protected final File keystoreFile
+    protected final String keyPassword
 
     protected final AntBuilder ant
 
@@ -52,8 +52,16 @@ abstract class TomcatServer implements EmbeddableServer {
         workDir = buildSettings.projectWorkDir
         tomcatDir = getWorkDirFile("tomcat")
 
-        keystoreFile = getWorkDirFile("ssl/keystore")
-        keyPassword = "123456"
+        def userKeystore = getConfigParam("keystorePath")
+        if (userKeystore) {
+            usingUserKeystore = true
+            keystoreFile = new File(userKeystore)
+            keyPassword = getConfigParam("keystorePassword") ?: "changeit" // changeit is the keystore default
+        } else {
+            usingUserKeystore = false
+            keystoreFile = getWorkDirFile("ssl/keystore")
+            keyPassword = "123456"
+        }
 
         System.setProperty('org.mortbay.xml.XmlParser.NotValidating', 'true')
 
@@ -99,7 +107,11 @@ abstract class TomcatServer implements EmbeddableServer {
 
     void startSecure(String host, int httpPort, int httpsPort) {
         if (!keystoreFile.exists()) {
-            createSSLCertificate()
+            if (usingUserKeystore) {
+                throw new IllegalStateException("cannot start tomcat in https because use keystore does not exist (value: $keystoreFile)")
+            } else {
+                createSSLCertificate()
+            }
         }
 
         doStart(host ?: DEFAULT_HOST, httpPort ?: DEFAULT_PORT, httpsPort ?: DEFAULT_SECURE_PORT)
