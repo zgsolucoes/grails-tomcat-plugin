@@ -13,26 +13,20 @@
  * limitations under the License.
  */
 class TomcatGrailsPlugin {
-    // the plugin version
+
     def version = "1.3.7.2-SNAPSHOT"
-    // the version or versions of Grails the plugin is designed for
     def grailsVersion = "1.3 > *"
-    // resources that are excluded from plugin packaging
+
+    def author = "Graeme Rocher"
+    def authorEmail = "graeme.rocher@springsource.com"
+    def title = "Apache Tomcat plugin for Grails"
+    def description = 'Replaces Jetty with Tomcat as the default development time server for Grails'
+    def documentation = "http://grails.org/plugin/tomcat"
+    
     def pluginExcludes = [
         "grails-app/**/*",
         "web-app/**/*"
     ]
-    // don't package in war
-    def scopes = [excludes:'war']
-	
-    def author = "Graeme Rocher"
-    def authorEmail = "graeme.rocher@springsource.com"
-    def title = "Apache Tomcat plugin for Grails"
-    def description = '''\\
-Replaces Jetty with Tomcat as the default development time server for Grails
-'''
 
-    // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/tomcat"
-
+    def scopes = [excludes: 'war']
 }
