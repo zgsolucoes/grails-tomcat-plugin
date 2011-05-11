@@ -86,8 +86,11 @@ class InlineExplodedTomcatServer extends TomcatServer {
         preStart()
         tomcat.hostname = host
         tomcat.port = httpPort
-        tomcat.connector.setAttribute("address", host)
         tomcat.connector.URIEncoding = 'UTF-8'
+
+        if (host != "localhost") {
+            tomcat.connector.setAttribute("address", host)
+        }
 
         if (httpsPort) {
             def sslConnector = loadInstance('org.apache.catalina.connector.Connector')
@@ -98,6 +101,11 @@ class InlineExplodedTomcatServer extends TomcatServer {
             sslConnector.setAttribute("keystore", keystoreFile.absolutePath)
             sslConnector.setAttribute("keystorePass", keyPassword)
             sslConnector.URIEncoding = 'UTF-8'
+
+            if (host != "localhost") {
+                sslConnector.setAttribute("address", host)
+            }
+
             tomcat.service.addConnector(sslConnector)
         }
 
