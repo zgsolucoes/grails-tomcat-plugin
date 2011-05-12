@@ -14,7 +14,7 @@
  */
 class TomcatGrailsPlugin {
 
-    def version = "1.3.7.2-SNAPSHOT"
+    def version = "1.3.7.2"
     def grailsVersion = "1.3 > *"
 
     def author = "Graeme Rocher"
