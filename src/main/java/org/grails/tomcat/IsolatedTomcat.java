@@ -95,6 +95,11 @@ public class IsolatedTomcat {
 				sslConnector.setAttribute("keystore", keystorePath);
 				sslConnector.setAttribute("keystorePass", keystorePassword);
 				sslConnector.setURIEncoding("UTF-8");
+				
+				if (!host.equals("localhost")) {
+					sslConnector.setAttribute("address", host);
+				}
+				
 				tomcat.getService().addConnector(sslConnector);
 			}
             
