@@ -1,5 +1,5 @@
 
-tomcatVersion = "7.0.16"
+tomcatVersion = "7.0.25"
 
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
@@ -25,9 +25,4 @@ grails.project.dependency.resolution = {
         build "org.grails:grails-plugin-tomcat:${grailsVersion}"
     }
 
-	plugins {
-		build( ":release:1.0.0.RC3" ) {
-			export = false
-		}
-	}
 }
