@@ -14,7 +14,7 @@
  */
 class TomcatGrailsPlugin {
     // the plugin version
-    def version = "2.0.1"
+    def version = "2.0.2.BUILD-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.0 > *"
     // resources that are excluded from plugin packaging
