@@ -7,12 +7,16 @@ includeTargets << grailsScript("_GrailsWar")
 ant.taskdef(name: "deploy",   classname: "org.apache.catalina.ant.DeployTask")
 ant.taskdef(name: "list",     classname: "org.apache.catalina.ant.ListTask")
 ant.taskdef(name: "undeploy", classname: "org.apache.catalina.ant.UndeployTask")
+ant.taskdef(name: "start", classname: "org.apache.catalina.ant.StartTask")
+ant.taskdef(name: "stop", classname: "org.apache.catalina.ant.StopTask")
 
 target(tomcat: '''\
 Script used to interact with remote Tomcat. The following subcommands are available:
 
 grails tomcat deploy - Deploy to a tomcat server
 grails tomcat undeploy - Undeploy from a tomcat server
+grails tomcat stop - Stop the tomcat webapp context
+grails tomcat start - Start the tomcat webapp context
 ''') {
 
     depends(parseArguments, compile, createConfig)
@@ -46,6 +50,19 @@ NOTE: If you experience a classloading error during undeployment you need to tak
 See http://tomcat.apache.org/tomcat-7.0-doc/config/systemprops.html for more information
 '''
             undeploy(url: url, path: serverContextPath, username: user, password: pass)
+            break
+
+        case 'start':
+            configureServerContextPath()
+            println "Starting application $serverContextPath in Tomcat"
+            start(url: url, path: serverContextPath, username: user, password: pass)
+            break
+
+        case 'stop':
+            configureServerContextPath()
+            println "Stopping application $serverContextPath in Tomcat"
+            stop(url: url, path: serverContextPath, username: user, password: pass)
+            break
     }
 }
 
