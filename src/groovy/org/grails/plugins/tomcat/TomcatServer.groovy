@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 SpringSource
+ * Copyright 2011-2015 SpringSource
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -91,11 +91,11 @@ abstract class TomcatServer implements EmbeddableServer {
             shouldScan = (Boolean) (scanConfig.enabled instanceof Boolean ? scanConfig.enabled : false)
             extraJarsToSkip = (scanConfig.excludes instanceof Collection) ? scanConfig.excludes.collect { it.toString() } : []
         }
-        
+
         tomcatDir.deleteDir()
         new File(tomcatDir, 'webapps').mkdirs()
     }
-    
+
     protected void configureJarScanner(Context context) {
         if (extraJarsToSkip && shouldScan) {
             try {
