@@ -26,6 +26,6 @@ class TomcatGrailsPlugin {
 		[name: 'Graeme Rocher', email: 'rocherg@ociweb.com'],
 		[name: 'Burt Beckwith', email: 'burt@burtbeckwith.com']
 	]
-	def issueManagement = [system: 'JIRA', url: 'http://jira.grails.org/browse/GPTOMCAT']
+	def issueManagement = [url: 'https://github.com/grails-plugins/grails-tomcat-plugin/issues']
 	def scm = [url: 'https://github.com/grails-plugins/grails-tomcat-plugin']
 }
