@@ -1,6 +1,15 @@
-tomcatVersion = "7.0.42"
+tomcatVersion = "7.0.72"
 
-grails.project.work.dir = 'target'
+Map<String, String> ENV = System.getenv()
+String mvnRepoHostDeploy = ENV['MVN_REPO_HOST']
+String mvnRepoUserDeploy = ENV['MVN_REPO_USER']
+String mvnRepoPasswordDeploy = ENV['MVN_REPO_PASSWORD']
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+grails.project.class.dir = 'target/classes'
+grails.project.test.class.dir = 'target/test-classes'
+grails.project.test.reports.dir = 'target/test-reports'
 
 grails.project.dependency.resolution = {
 
@@ -8,8 +17,19 @@ grails.project.dependency.resolution = {
     log "warn"
 
     repositories {
+        grailsPlugins()
+        grailsHome()
         grailsCentral()
+        mavenLocal()
         mavenCentral()
+        mavenRepo ENV['MVN_REPO_REPOSITORIES_URL_LIBS']
+        mavenRepo ENV['MVN_REPO_REPOSITORIES_GRAILS_PLUGINS']
+    }
+    credentials {
+        realm = ENV['MVN_REPO_REALM']
+        host = mvnRepoHostDeploy
+        username = mvnRepoUserDeploy
+        password = mvnRepoPasswordDeploy
     }
 
     dependencies {
@@ -20,6 +40,7 @@ grails.project.dependency.resolution = {
         runtime "org.apache.tomcat.embed:tomcat-embed-jasper:$tomcatVersion"
         runtime "org.apache.tomcat.embed:tomcat-embed-logging-log4j:$tomcatVersion"
         runtime "org.apache.tomcat.embed:tomcat-embed-logging-juli:$tomcatVersion"
+        runtime "org.apache.tomcat.embed:tomcat-embed-websocket:$tomcatVersion"
 
 		// needed for JSP compilation
 		runtime "org.eclipse.jdt.core.compiler:ecj:3.7.2"
@@ -38,3 +59,13 @@ grails.project.dependency.resolution = {
         }
     }
 }
+
+grails.project.repos.releases.url = ENV['MVN_REPO_REPOSITORIES_URL_PLUGINS_RELEASE']
+grails.project.repos.releases.username = mvnRepoUserDeploy
+grails.project.repos.releases.password = mvnRepoPasswordDeploy
+
+grails.project.repos.snapshots.url = ENV['MVN_REPO_REPOSITORIES_URL_PLUGINS_SNAPSHOT']
+grails.project.repos.snapshots.username = mvnRepoUserDeploy
+grails.project.repos.snapshots.password = mvnRepoPasswordDeploy
+
+grails.project.repos.default = 'snapshots'
